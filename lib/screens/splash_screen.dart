@@ -16,7 +16,7 @@ with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     Future.delayed(const Duration(seconds: 3), () {
       _sendDeviceData();
@@ -74,6 +74,7 @@ with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
