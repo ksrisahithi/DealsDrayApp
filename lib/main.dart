@@ -1,4 +1,4 @@
-// import 'package:deals_dray_app/screens/login_screen.dart';
+import 'package:deals_dray_app/screens/login_screen.dart';
 import 'package:deals_dray_app/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
