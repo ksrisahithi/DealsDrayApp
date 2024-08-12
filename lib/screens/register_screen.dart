@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:deals_dray_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,13 +26,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _checkInput() {
     setState(() {
-      _buttonEnable = emailController.text.isNotEmpty &&
-          passwordController.text.isNotEmpty;
+      _buttonEnable =
+          emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
     });
   }
 
   Future<void> _sendRegisterData() async {
-    var url = Uri.parse('http://devapiv4.dealsdray.com/api/v2/user/email/referral');
+    var url =
+        Uri.parse('http://devapiv4.dealsdray.com/api/v2/user/email/referral');
 
     var response = await http.post(
       url,
@@ -41,19 +41,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         'Content-Type': 'application/json',
       },
       body: json.encode({
-          "email":"muhammedrafnasvk@gmail.com",
-          "password":"1234Rafnas",
-          "referralCode":12345678,
-          "userId":"62a833766ec5dafd6780fc85"
+        "email": "muhammedrafnasvk@gmail.com",
+        "password": "1234Rafnas",
+        "referralCode": 12345678,
+        "userId": "62a833766ec5dafd6780fc85"
       }),
     );
 
     try {
       if (response.statusCode == 200) {
         print('Response: ${response.body}');
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => const HomeScreen())
-        );
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const HomeScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Response : ${response.body}')),
@@ -61,9 +60,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         print('Status Code: ${response.statusCode}');
         print('Reason: ${response.reasonPhrase}');
         print('Response: ${response.body}');
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => const HomeScreen())
-        );
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const HomeScreen()));
       }
     } catch (e) {
       print('Exception : $e');
@@ -121,12 +119,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               decoration: InputDecoration(
                                 labelText: 'Create Password',
                                 suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isPasswordVisible = !_isPasswordVisible;
+                                  icon: Icon(
+                                    _isPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
                                     });
                                   },
                                 ),
@@ -147,20 +147,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: ElevatedButton(
-                          onPressed: _buttonEnable
-                              ? () {
-                                  _sendRegisterData();
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            minimumSize: const Size(50, 50),
-                            alignment: Alignment.center,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          child: Icon(Icons.arrow_forward, color: _buttonEnable ? Colors.white : Colors.black,)
-                        ),
+                            onPressed: _buttonEnable
+                                ? () {
+                                    _sendRegisterData();
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              minimumSize: const Size(50, 50),
+                              alignment: Alignment.center,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color:
+                                  _buttonEnable ? Colors.white : Colors.black,
+                            )),
                       ),
                     ],
                   ),

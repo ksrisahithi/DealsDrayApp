@@ -12,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  // final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   bool _buttonDisable = false;
 
@@ -47,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Content-Type': 'application/json',
       },
       body: json.encode({
-        "mobileNumber":"9011470243",
+        "mobileNumber": "9011470243",
         // "mobileNumber":phoneController.text,
         "deviceId": "62b341aeb0ab5ebe28a758a3",
       }),
@@ -57,8 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         print('Response: ${response.body}');
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => const OtpScreen())
-        );
+            builder: (_) => OtpScreen(
+                  phoneNumber: phoneController.text,
+                )));
       } else {
         print('Status Code: ${response.statusCode}');
         print('Reason: ${response.reasonPhrase}');
@@ -83,60 +83,82 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: Column(
             children: [
-              Image.asset('assets/dealsdray_logo.png', opacity: const AlwaysStoppedAnimation(0.5),),
+              Image.asset(
+                'assets/dealsdray_logo.png',
+                opacity: const AlwaysStoppedAnimation(0.5),
+              ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.red),
-                child: const Text('Phone', style: 
-                  TextStyle(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20), color: Colors.red),
+                child: const Text(
+                  'Phone',
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.75,
                 child: Column(
                   children: [
                     const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Glad to see you!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32), ),
+                      child: Text(
+                        'Glad to see you!',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 32),
+                      ),
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Please provide your number', style: TextStyle(color: Colors.grey),),
-                    ),
-                    const SizedBox(height: 20,),
-                    Form(
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: phoneController,
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              labelText: 'Phone Number',
-                            ),
-                            validator: _validatePhoneNumber,
-                          ),
-                          const SizedBox(height: 30),
-                          ElevatedButton(
-                            onPressed: _buttonDisable ? () {
-                              _sendPhoneData();
-                            } 
-                            : null,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              minimumSize: const Size(double.infinity, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-                            ),
-                            child: const Text('SEND CODE', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-                          ),
-                        ],
+                      child: Text(
+                        'Please provide your number',
+                        style: TextStyle(color: Colors.grey),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        TextFormField(
+                          controller: phoneController,
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            labelText: 'Phone Number',
+                          ),
+                          validator: _validatePhoneNumber,
+                        ),
+                        const SizedBox(height: 30),
+                        ElevatedButton(
+                          onPressed: _buttonDisable
+                              ? () {
+                                  _sendPhoneData();
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            minimumSize: const Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          child: const Text(
+                            'SEND CODE',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

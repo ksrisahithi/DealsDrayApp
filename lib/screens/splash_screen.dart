@@ -10,9 +10,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> 
-with SingleTickerProviderStateMixin {
-
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -20,9 +19,7 @@ with SingleTickerProviderStateMixin {
 
     Future.delayed(const Duration(seconds: 3), () {
       _sendDeviceData();
-      }
-    );
-    
+    });
   }
 
   Future<void> _sendDeviceData() async {
@@ -54,9 +51,8 @@ with SingleTickerProviderStateMixin {
       if (response.statusCode == 200) {
         String responseBody = await response.stream.bytesToString();
         print(responseBody);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => const LoginScreen())
-        );
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const LoginScreen()));
       } else {
         print('Error: ${response.reasonPhrase}');
       }
@@ -67,27 +63,34 @@ with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
-        child:  Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Center(child: CircularProgressIndicator(),),
-            const SizedBox(height: 50,),
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
             Image.asset('assets/dealsdray_logo.png'),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),

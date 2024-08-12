@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // For decoding JSON
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -43,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   if (_data!['banner_one'] != null) _buildBanners(_data!['banner_one']),
+                  const SizedBox(height: 20,),
                   if (_data!['category'] != null) _buildCategories(_data!['category']),
+                  const SizedBox(height: 20,),
                   if (_data!['banner_two'] != null) _buildBanners(_data!['banner_two']),
                 ],
               ),
@@ -52,24 +54,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBanners(List<dynamic> banners) {
-    return Column(
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal, 
+    child: Row(
       children: banners.map((bannerData) {
-        final String bannerUrl = bannerData['banner'] ?? ''; 
-        return bannerUrl.isNotEmpty ? Image.network(bannerUrl) : Container(); 
+        final String bannerUrl = bannerData['banner'] ?? '';
+        return bannerUrl.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Image.network(bannerUrl),
+              )
+            : Container();
       }).toList(),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildCategories(List<dynamic> categories) {
-    return Column(
-      children: categories.map((categoryData) {
-        final String label = categoryData['label'] ?? 'Unknown';
-        final String iconUrl = categoryData['icon'] ?? '';
-        return ListTile(
-          leading: iconUrl.isNotEmpty ? Image.network(iconUrl) : null,
-          title: Text(label),
-        );
-      }).toList(),
-    );
-  }
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround, 
+    children: categories.map((categoryData) {
+      final String label = categoryData['label'] ?? 'Unknown';
+      final String iconUrl = categoryData['icon'] ?? '';
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          iconUrl.isNotEmpty
+              ? Image.network(
+                  iconUrl,
+                  width: 50, 
+                  height: 50,
+                )
+              : Container(
+                  width: 50,
+                  height: 50,
+                  color: Colors.grey[300],
+                ),
+          const SizedBox(height: 8.0),
+          Text(label, style: const TextStyle(fontSize: 12)),
+        ],
+      );
+    }).toList(),
+  );
+}
+
 }
